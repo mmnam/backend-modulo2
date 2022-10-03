@@ -11,3 +11,41 @@ const User = sequelize.define("User", {
     correo: DataTypes.STRING,
     rol: DataTypes.STRING
 });
+
+const Orders = sequelize.define("Orders", {
+    estado: DataTypes.STRING,
+    fecha: DataTypes.DATE,
+    montoTotal: DataTypes.FLOAT
+});
+
+const Products = sequelize.define("Products", {
+    nombreProducto: DataTypes.STRING,
+    precio: DataTypes.FLOAT,
+    descripcion: DataTypes.TEXT,
+    categoria: DataTypes.STRING,
+    status: DataTypes.STRING
+});
+
+const Reviews = sequelize.define("Reviews", {
+    calificacion: DataTypes.INTEGER,
+    titulo: DataTypes.STRING,
+    descripcion: DataTypes.TEXT,
+    date: DataTypes.DATE
+})
+
+User.hasMany(Orders);
+Orders.belongsTo(User);
+
+Orders.hasMany(Products);
+Products.hasMany(Orders);
+
+User.hasMany(Reviews);
+Reviews.belongsTo(User);
+
+Products.hasMany(Reviews);
+Reviews.belongsTo(Products);
+
+await sequelize.sync();
+
+
+
