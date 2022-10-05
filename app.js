@@ -1,6 +1,12 @@
 const express = require('express');
 const sequelize = require('./config/db');
 
+const producto = require('./models/products');
+const review = require('./models/reviews');
+const user = require('./models/users');
+const order = require('./models/orders');
+const order_datail = require ('./models/order_details');
+
 const app = express();
 app.use(express.json());
 
