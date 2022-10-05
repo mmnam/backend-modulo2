@@ -6,9 +6,11 @@ const review = require('./models/reviews');
 const user = require('./models/users');
 const order = require('./models/orders');
 const order_datail = require ('./models/order_details');
+const routes = require('./routes/index');
 
 const app = express();
 app.use(express.json());
+app.use('/',routes)
 
 try {
     sequelize.authenticate();
@@ -18,9 +20,9 @@ try {
     console.log('Unable to connect to DB:', error);
 }
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
-    console.log("Server listing on PORT 3000");
+    console.log("Server listing on PORT",PORT);
 });
 
 
