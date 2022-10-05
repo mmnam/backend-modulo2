@@ -1,4 +1,30 @@
-import { Sequelize, DataTypes } from 'sequelize';
+const express = require('express');
+const sequelize = require('./config/db');
+
+const producto = require('./models/products');
+const review = require('./models/reviews');
+const user = require('./models/users');
+const order = require('./models/orders');
+const order_datail = require ('./models/order_details');
+
+const app = express();
+app.use(express.json());
+
+try {
+    sequelize.authenticate();
+    sequelize.sync();
+    console.log('Connected to DB');
+} catch (error) {
+    console.log('Unable to connect to DB:', error);
+}
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log("Server listing on PORT 3000");
+});
+
+
+/* import { Sequelize, DataTypes } from 'sequelize';
 
 const sequelize = new Sequelize('sqlite:db.sqlite3');
 
@@ -45,7 +71,7 @@ Reviews.belongsTo(User);
 Products.hasMany(Reviews);
 Reviews.belongsTo(Products);
 
-await sequelize.sync();
+await sequelize.sync(); */
 
 
 
