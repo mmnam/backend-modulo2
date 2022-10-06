@@ -12,6 +12,7 @@ const auth = {
         if(!req.auth || !req.auth.user){
             return res.sendStatus(401)
         }
+        console.log(req.auth)
         next()
     },
     isSeller:(req,res,next)=>{
@@ -19,6 +20,14 @@ const auth = {
             return res.sendStatus(401)
         }
         if(req.auth.rol!== 'seller'){
+            return res.sendStatus(403)
+        }
+        next()}
+    ,isBuyer:(req,res,next)=>{
+        if(!req.auth){
+            return res.sendStatus(401)
+        }
+        if(req.auth.rol!== 'buyer'){
             return res.sendStatus(403)
         }
         next()}
