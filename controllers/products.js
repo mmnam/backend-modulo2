@@ -6,6 +6,11 @@ function addProduct(req, res) {
         res.status(201).json(product);
     });
 }
+async function getProducts(req,res){
+    console.log(req.auth)
+    const products = await Product.findAll()
+    res.status(200).json(products)    
+}
 
 
-module.exports = { addProduct }
+module.exports = { addProduct ,getProducts}

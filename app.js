@@ -8,8 +8,13 @@ const order = require('./models/orders');
 const order_datail = require ('./models/order_details');
 const routes = require('./routes/index');
 
+const auth = require('./config/auth')
+
+
+
 const app = express();
 app.use(express.json());
+app.use(auth.optional)
 app.use('/',routes)
 
 try {

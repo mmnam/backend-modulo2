@@ -8,10 +8,26 @@ function getTokenFromHeader(req){
 }
 
 const auth = {
-    required:expressjwt({
+    required:(req,res,next)=>{
+        if(!req.auth || !req.auth.user){
+            return res.sendStatus(401)
+        }
+        next()
+    },
+    isSeller:(req,res,next)=>{
+        if(!req.auth){
+            return res.sendStatus(401)
+        }
+        if(req.auth.rol!== 'seller'){
+            return res.sendStatus(403)
+        }
+        next()}
+    ,
+    optional:expressjwt({
         secret: secret,
         algorithms:['HS256'],
         userProperty:'user',
+        credentialsRequired:false,
         getToken:getTokenFromHeader
     })
 }

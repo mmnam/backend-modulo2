@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { addProduct } = require('../controllers/products');
+const { addProduct,getProducts } = require('../controllers/products');
 const auth = require('../config/auth')
 
 
 
-router.post('/addProduct',auth.required, addProduct);
+router.post('/addProduct',auth.isSeller, addProduct);
+router.get('/getProducts',getProducts)
 
-
-module.exports = router;
+module.exports = router; 
