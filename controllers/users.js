@@ -28,7 +28,12 @@ async function logIn(req, res) {
         return res.status(404).json({error: "User not found"});
     }
     if (User.validatePassword(body['password'], user.password_salt, user.password_hash)) {
-        return res.status(200).json({mensaje: "Bienvenido!"});
+        return res.status(200).json({user: "Bienvenido!",
+        email:user.usuario,
+        email:user.email,
+        token:User.generateJWT(user)
+    
+    });
     } else {
         return res.status(400).json({mensaje: "Password Incorrecto"});
     }
