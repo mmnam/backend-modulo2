@@ -12,6 +12,25 @@ function createOrder(req, res) {
     });
 }
 
+async function getOrder(req, res) {
+    const id = req.params.id;
+    const order = await Order.findByPk(id);
+    res.status(200).json(order);
+}
+
+async function getOrders(req, res) {
+    const order = await Order.findAll();
+    res.status(200).json(order);    
+}
+
+async function deleteOrder(req, res) {
+    const id = req.params.id;
+    const deleted = Order.destroy(
+        {where: {id} }
+    );
+    res.status(200).json(deleted);
+}
+
 async function updateOrder(req, res) {
     const id = req.params.id;
     const order = req.body;
@@ -19,4 +38,4 @@ async function updateOrder(req, res) {
     const order_updated = await Order.findByPk(id);
     res.status(200).json(order_updated);
 }
-module.exports = { createOrder,updateOrder }
+module.exports = { createOrder,updateOrder,deleteOrder,getOrders,getOrder }

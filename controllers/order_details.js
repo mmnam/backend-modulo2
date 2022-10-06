@@ -13,6 +13,26 @@ function createOrderDet(req, res) {
         res.status(201).json(order);
     });
 }
+
+async function getOrderDetail(req, res) {
+    const id = req.params.id;
+    const order = await Order_details.findByPk(id);
+    res.status(200).json(order);
+}
+
+async function getOrdersDetail(req, res) {
+    const order = await Order_details.findAll();
+    res.status(200).json(order);    
+}
+
+async function deleteOrderDetail(req, res) {
+    const id = req.params.id;
+    const deleted = Order_details.destroy(
+        {where: {id} }
+    );
+    res.status(200).json(deleted);
+}
+
 async function updateOrderDet(req, res) {
     const id = req.params.id;
     const order = req.body;
@@ -26,4 +46,4 @@ async function updateOrderDet(req, res) {
 
 
 
-module.exports = { createOrderDet,updateOrderDet }
+module.exports = { createOrderDet,updateOrderDet,getOrderDetail,getOrdersDetail,deleteOrderDetail }
