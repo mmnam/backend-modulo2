@@ -18,6 +18,10 @@ const Products = sequelize.define("Products", {
         type: DataTypes.STRING,
         allowNull: false
     },
+    stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false}
+    ,
     status: {
         type: DataTypes.CHAR(15),
         allowNull: false

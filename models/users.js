@@ -33,11 +33,11 @@ const User = sequelize.define('Users', {
         allowNull: true
     },
     password_salt: {
-        type: DataTypes.CHAR(64),
+        type: DataTypes.TEXT,
         allowNull: true
     },
     rol: {
-        type: DataTypes.CHAR(15),
+        type: DataTypes.TEXT,
         allowNull: true
     }
 });
