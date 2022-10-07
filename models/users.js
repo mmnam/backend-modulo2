@@ -67,7 +67,8 @@ User.generateJWT = function(user){
     return jwt.sign({
         user:user.usuario,
         exp:parseInt(exp.getTime()/1000),
-        rol:user.rol
+        rol:user.rol,
+        id:user.id
     },secret)
 }
 

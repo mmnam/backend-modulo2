@@ -1,5 +1,6 @@
 const express = require('express');
 const sequelize = require('./config/db');
+require('./config/passport');
 
 const producto = require('./models/products');
 const review = require('./models/reviews');

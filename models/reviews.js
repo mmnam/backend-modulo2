@@ -19,7 +19,8 @@ const Reviews = sequelize.define("Reviews", {
     date: {
         type: DataTypes.DATE,
         allowNull: false
-    },
+    }
+    
 });
 
 User.hasMany(Reviews);

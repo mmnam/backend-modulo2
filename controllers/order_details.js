@@ -46,4 +46,6 @@ async function updateOrderDet(req, res) {
 
 
 
+
+
 module.exports = { createOrderDet,updateOrderDet,getOrderDetail,getOrdersDetail,deleteOrderDetail }

@@ -15,6 +15,15 @@ const auth = {
         console.log(req.auth)
         next()
     },
+    canDeleteReview:(req,res,next)=>{
+        if(!req.auth){
+            return res.sendStatus(401)
+        }
+        if(req.auth.id!== 'seller'){
+            return res.sendStatus(403)
+        }
+        next()}
+    ,
     isSeller:(req,res,next)=>{
         if(!req.auth){
             return res.sendStatus(401)

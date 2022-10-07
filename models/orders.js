@@ -5,15 +5,15 @@ const User = require('./users');
 const Orders = sequelize.define("Orders", {
     status: {
         type: DataTypes.CHAR(15),
-        allowNull: false
+        allowNull: false,
+        defaultValue:'pending'
     },
     date: {
         type: DataTypes.DATE,
         allowNull: false
     },
     montoTotal: {
-        type: DataTypes.FLOAT,
-        allowNull: false
+        type: DataTypes.FLOAT
     }
 });
 

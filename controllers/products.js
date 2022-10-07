@@ -1,4 +1,6 @@
+const { Sequelize } = require('sequelize');
 const Product = require('../models/products');
+const Op = Sequelize.Op
 
 function addProduct(req, res) {
     const body = req.body;
@@ -33,5 +35,17 @@ async function updateProduct(req, res) {
     res.status(200).json(product_updated);
 }
 
+async function getProductByName(req, res) {
+    
+    const name = req.body.nombreProducto;
+    
+    const product = await Product.findAll({
+        where:{
+            nombreProducto:{ [Op.like]:`%${name}%`}
+        }
+    });
+    res.status(200).json(product);
+}
 
-module.exports = { addProduct ,getProducts,getProduct, deleteProduct,updateProduct}
+
+module.exports = { addProduct ,getProducts,getProduct, deleteProduct,updateProduct,getProductByName}
