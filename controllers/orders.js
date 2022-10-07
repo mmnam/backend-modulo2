@@ -44,6 +44,9 @@ async function createOrder(req, res) {
         }
         catch(err){
             if(!productFromQuery){
+                Order.destroy(
+                    {where: {id:order.id} }
+                );
                 return res.status(400).json({
                     error: "ProductId not found"
                 })
@@ -71,12 +74,7 @@ async function createOrder(req, res) {
     await Order.update({montoTotal:montoTotal,UserId:user.id}, 
         {where: {id:order.dataValues.id}});
     res.status(200).json(order)
-    //console.log(products)
-    /*const product = await Product.findOne({
-        where:{
-            id:{ [Op.like]:`%${name}%`}
-        }
-    });*/
+
 }
 
 async function getOrder(req, res) {
@@ -86,7 +84,8 @@ async function getOrder(req, res) {
 }
 
 async function getOrders(req, res) {
-    const order = await Order.findAll();
+    const user = await User.findOne({where:{usuario:req.body.usuario}})
+    const order = await Order.findAll({where:{UserId:user.id}});
     res.status(200).json(order);    
 }
 

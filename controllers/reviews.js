@@ -5,10 +5,12 @@ const canDeleteReview = require('../config/auth')
 async function createReview(req, res) {
 
     const body = req.body;
-    if(!body.UserId){
+    if(!body.UserId && !body.usuario){
         res.status(400).json({Error:'UserId:null'})
         }else{
             try{   
+                const user = await User.findOne({where:{usuario:req.body.usuario}})
+                body.UserId = user.id
                 const review = await Review.create(body)
                     res.status(201).json(review)
         
