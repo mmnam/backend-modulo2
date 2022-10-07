@@ -7,21 +7,24 @@ async function createReview(req, res) {
     const body = req.body;
     if(!body.UserId){
         res.status(400).json({Error:'UserId:null'})
-        }
-    try{   
-        const review = await Review.create(body)
-            res.status(201).json(review)
+        }else{
+            try{   
+                const review = await Review.create(body)
+                    res.status(201).json(review)
+        
+            }catch (err) {
+                if (["SequelizeForeignKeyConstraintError",'SequelizeValidationError'].includes(err.name) ) {
+                    return res.status(400).json({
+                        error: err.name
+                    })
+                }
+                else {
+                    throw err;
+                }
+            }
 
-    }catch (err) {
-        if (["SequelizeForeignKeyConstraintError",'SequelizeValidationError'].includes(err.name) ) {
-            return res.status(400).json({
-                error: err.name
-            })
         }
-        else {
-            throw err;
-        }
-    }
+   
    
 }
 async function getReview(req, res) {
