@@ -5,7 +5,7 @@ const passport = require('passport');
 
 
 router.post('/createReview', auth.isBuyer,createReview);
-router.patch('/:id', auth.isBuyer,updateReview);
+router.patch('/:id',passport.authenticate('local', {session: false, assignProperty: 'user'}),updateReview);
 router.delete('/:id',passport.authenticate('local', {session: false, assignProperty: 'user'}),deleteReview)
 router.get('/',getReviews)
 router.get('/:id',getReview)

@@ -60,13 +60,22 @@ async function deleteReview(req, res) {
 }
 
 async function updateReview(req, res) {
+    const user = await User.findOne({where:{usuario:req.body.usuario}})
     const id = req.params.id;
     const order = req.body;
     const review = await Review.findByPk(id);
     if(review){
-    await Review.update(order, {where: {id}});
-    const review_updated = await Review.findByPk(id);
-    res.status(200).json(review_updated);}
+        if(user.id==review.UserId){
+        await Review.update(order, {where: {id}});
+        const review_updated = await Review.findByPk(id);
+        res.status(200).json(review_updated);
+        }
+        
+        else{
+            res.status(400).json({Error:"This user is not the owner of this review"});
+
+        }
+    }
     else{
         res.status(204).json();
     }

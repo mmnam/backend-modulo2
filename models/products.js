@@ -20,7 +20,8 @@ const Products = sequelize.define("Products", {
     },
     stock: {
         type: DataTypes.INTEGER,
-        allowNull: false}
+        defaultValue: 1
+    }
     ,
     status: {
         type: DataTypes.CHAR(15),
