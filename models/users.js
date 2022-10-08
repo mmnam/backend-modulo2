@@ -6,23 +6,28 @@ const secret = require('../config/secret')
 
 const User = sequelize.define('Users', {
     usuario: {
-        type: DataTypes.CHAR(64),
-        allowNull: false
+        type: DataTypes.STRING(64),
+        allowNull: false,
+        unique: true,
+        validate: {
+            isLowercase: true,
+            is: /^[a-zA-Z0-9_-]+$/,
+        }
     },
     nombre: {
-        type: DataTypes.CHAR(64),
+        type: DataTypes.STRING(64),
         allowNull: false
     },
     apellidoPaterno: {
-        type: DataTypes.CHAR(128),
+        type: DataTypes.STRING(128),
         allowNull: false
     },
     apellidoMaterno: {
-        type: DataTypes.CHAR(128),
+        type: DataTypes.STRING(128),
         allowNull: false
     },
     email: {
-        type: DataTypes.CHAR(64),
+        type: DataTypes.STRING(64),
         allowNull: false,
         unique: true,
         validate: {
@@ -30,7 +35,7 @@ const User = sequelize.define('Users', {
         }
     },
     password_hash: {
-        type: DataTypes.CHAR(64),
+        type: DataTypes.TEXT,
         allowNull: true
     },
     password_salt: {
@@ -38,7 +43,7 @@ const User = sequelize.define('Users', {
         allowNull: true
     },
     rol: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(10),
         allowNull: true
     }
 });
