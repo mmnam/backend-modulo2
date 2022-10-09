@@ -23,20 +23,24 @@ async function signUp(req, res) {
 }
 
 async function logIn(req, res) {
-    const body = req.body;
-    const user = await User.findOne({where: {usuario: body['usuario']}});
-    if (!user) {
-        return res.status(404).json({error: "User not found"});
-    }
-    if (User.validatePassword(body['password'], user.password_salt, user.password_hash)) {
-        return res.status(200).json({user: "Bienvenido!",
-        email:user.usuario,
-        email:user.email,
-        token:User.generateJWT(user)
-    
-    });
-    } else {
-        return res.status(400).json({mensaje: "Password Incorrecto"});
+    if (Object.keys(req.body).length == 0) {
+        res.status(400).json({error: "null data"});
+    } else{
+        const body = req.body;
+        const user = await User.findOne({where: {usuario: body['usuario']}});
+        if (!user) {
+            return res.status(404).json({error: "User not found"});
+        }
+        if (User.validatePassword(body['password'], user.password_salt, user.password_hash)) {
+            return res.status(200).json({user: "Bienvenido!",
+            email:user.usuario,
+            email:user.email,
+            token:User.generateJWT(user)
+        
+        });
+        } else {
+            return res.status(400).json({mensaje: "Password Incorrecto"});
+        }
     }
 }
 
