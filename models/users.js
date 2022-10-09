@@ -44,7 +44,10 @@ const User = sequelize.define('Users', {
     },
     rol: {
         type: DataTypes.STRING(10),
-        allowNull: true
+        allowNull: false,
+        validate: {
+            isLowercase: true,
+        }
     }
 });
 
