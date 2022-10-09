@@ -21,26 +21,19 @@ async function createOrder(req, res) {
     if(isNaN(items[id])){
             res.status(400).json({
                 warning:"itemsId must be a number"
-        
             });
             return null
-
         }}
 
     for(const id in items){
-        
-        
         let productFromQuery = await Products.findOne({where:{id:items[id]}})
         try{
             if(productFromQuery.dataValues.stock==0){
-            res.status(200).json({
-                warning:"Not enough inventory to fullfill order"
-        
-            });
-            return null
-            
-            
-        }
+                res.status(200).json({
+                    warning:"Not enough inventory to fullfill order"
+                });
+                return null
+            }
         }
         catch(err){
             if(!productFromQuery){
@@ -50,13 +43,10 @@ async function createOrder(req, res) {
                 return res.status(400).json({
                     error: "ProductId not found"
                 })
-                
             }
-            
         }
         
         let newstock = productFromQuery.dataValues.stock-=1
-       
         let idProduct = productFromQuery.dataValues.id
         let price = productFromQuery.dataValues.precio
         montoTotal +=price 
@@ -68,19 +58,20 @@ async function createOrder(req, res) {
             ProductId:idProduct,
             OrderId:orderId
         })
-
-
     }
     await Order.update({montoTotal:montoTotal,UserId:user.id}, 
         {where: {id:order.dataValues.id}});
     res.status(200).json(order)
-
 }
 
 async function getOrder(req, res) {
     const id = req.params.id;
-    const order = await Order.findByPk(id);
-    res.status(200).json(order);
+    if(Number(id)){
+        const order = await Order.findByPk(id);
+        res.status(200).json(order);
+    } else {
+        res.status(400).json({Error:"enter a correct ID type"});
+    }
 }
 
 async function getOrders(req, res) {
@@ -90,18 +81,30 @@ async function getOrders(req, res) {
 }
 
 async function deleteOrder(req, res) {
-    const id = req.params.id;
-    const deleted = Order.destroy(
-        {where: {id} }
-    );
-    res.status(200).json(deleted);
+    if(Number(id)){
+        const id = req.params.id;
+        const deleted = Order.destroy(
+            {where: {id} }
+        );
+        res.status(200).json({deleted: "Order deleted"});
+    } else {
+        res.status(400).json({Error:"enter a correct ID type"});
+    }
 }
 
 async function updateOrder(req, res) {
     const id = req.params.id;
-    const order = req.body;
-    await Order.update(order, {where: {id}});
-    const order_updated = await Order.findByPk(id);
-    res.status(200).json(order_updated);
+    if(Number(id)){
+        if (Object.keys(req.body).length == 0) {
+            res.status(400).json({error: "null data"});
+        } else{
+            const order = req.body;
+            await Order.update(order, {where: {id}});
+            const order_updated = await Order.findByPk(id);
+            res.status(200).json(order_updated);
+        }
+    } else {
+        res.status(400).json({Error:"enter a correct ID type"});
+    }
 }
 module.exports = { createOrder,updateOrder,deleteOrder,getOrders,getOrder }
