@@ -6,7 +6,7 @@ const reviews = require('./reviews');
 const orders = require('./orders')
 
 router.get('/', (req, res) => {
-    res.json({'info': 'Welcome to gods API!'})
+    res.json({'info': 'Welcome to BeduShop API!'})
 });
 
 router.use('/users', users);
